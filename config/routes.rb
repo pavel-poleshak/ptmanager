@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :tasks
   resources :statuses
   devise_for :users, controllers: { registrations: 'users/registrations' }
   root 'projects#index'
