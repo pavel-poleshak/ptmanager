@@ -6,4 +6,6 @@ class User < ApplicationRecord
 
   validates :first_name, presence: true
   validates :last_name, presence: true
+  has_many :task_items
+  has_many :tasks, through: :task_items
 end
