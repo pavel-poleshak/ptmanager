@@ -61,6 +61,18 @@ class TasksController < ApplicationController
     end
   end
 
+  def delete_join_user
+    @task=Task.find(params[:task_id])
+    @user=User.find(params[:id])
+    @task.users.delete(@user)
+    respond_to do |format|
+      format.html { redirect_to tasks_url, notice: 'User was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task

@@ -1,7 +1,15 @@
 Rails.application.routes.draw do
+  delete 'tasks/:task_id/users/:id(.:format)', to: 'tasks#delete_join_user', as: 'delete_join_user'
+  resources :tasks do
+      resources :users, only: [:show]
+  end
+
+
+
   resources :tasks
   resources :statuses
   devise_for :users, controllers: { registrations: 'users/registrations' }
+  resources :users, only: [:show]
   root 'projects#index'
   get 'projects/index', as: 'user_root'
   resources :projects
