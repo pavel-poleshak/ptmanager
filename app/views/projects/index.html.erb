@@ -21,13 +21,14 @@
         <td><%= project.start_date %></td>
         <td><%= project.end_date %></td>
         <td><%= link_to 'Show', project %></td>
-        <td><%= link_to 'Edit', edit_project_path(project) %></td>
-        <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if current_user.admin? %>
+          <td><%= link_to 'Edit', edit_project_path(project) %></td>
+          <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Project', new_project_path %>
+<%= link_to 'New Project', new_project_path if current_user.admin? %>
