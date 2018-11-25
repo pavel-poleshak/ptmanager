@@ -21,9 +21,10 @@
 </p>
 
 <p>
+
   <strong>Tasks</strong>
   <p><%= link_to 'New Task', new_task_path %></p>
-  <% @tasks=@project.tasks %>
+  <% @tasks=current_user.tasks.where(project: @project) %>
   <% if @tasks.empty? %>
     <p><strong>Tasks not exist for this project</strong></p>
   <% else %>
