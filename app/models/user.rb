@@ -8,4 +8,5 @@ class User < ApplicationRecord
   validates :last_name, presence: true
   has_many :task_items
   has_many :tasks, through: :task_items
+  has_many :projects, through: :tasks
 end
