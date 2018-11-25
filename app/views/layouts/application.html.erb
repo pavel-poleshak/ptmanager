@@ -10,7 +10,7 @@
   </head>
 
   <body>
-    <% if user_signed_in? %>
+    <% if user_signed_in? %>  
       <span> <%= "Hi, #{current_user.first_name} #{current_user.last_name}"%></span>
       <%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
     <% else %>

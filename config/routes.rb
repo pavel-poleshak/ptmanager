@@ -4,14 +4,16 @@ Rails.application.routes.draw do
       resources :users, only: [:show]
   end
 
+  resources :projects do
+    resources :tasks, shallow: true
+  end
 
-
-  resources :tasks
+  #resources :tasks
   resources :statuses
   devise_for :users, controllers: { registrations: 'users/registrations' }
   resources :users, only: [:show]
   root 'projects#index'
-  get 'projects/index', as: 'user_root'
+  get 'projects', as: 'user_root'
   resources :projects
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

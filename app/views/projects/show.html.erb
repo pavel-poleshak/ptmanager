@@ -22,14 +22,20 @@
 
 <p>
   <strong>Tasks</strong>
-  <% @tasks.each do |task| %>
-    <p><%= task.title %>
-    <p><%= task.description %>
-    <p><%= task.status.title %>
-    <p><%= link_to 'Show', task %>
-    <p><%= link_to 'Edit', edit_task_path(task) %>
-    <p><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <p><%= link_to 'New Task', new_task_path %></p>
+  <% @tasks=@project.tasks %>
+  <% if @tasks.empty? %>
+    <p><strong>Tasks not exist for this project</strong></p>
+  <% else %>
+    <% @tasks.each do |task| %>
+      <p><%= task.title %>
+      <p><%= task.description %>
+      <p><%= task.status.title %>
+      <p><%= link_to 'Show', task_path(task) %>
+      <p><%= link_to 'Edit', edit_task_path(task) %>
+      <p><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %>
     <% end %>
+  <% end %>
 </p>
 
 <%= link_to 'Edit', edit_project_path(@project) %> |
