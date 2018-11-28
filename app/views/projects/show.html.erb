@@ -1,43 +1,65 @@
-<p id="notice"><%= notice %></p>
+<%= render 'regular_information', title: "Project info" %>
+<%= render partial: "main_information", locals: { project: @project } %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @project.name %>
-</p>
+<div class="row">
+  <div class="col-12 text-center">
+    <strong>Tasks</strong>
+  </div>
+</div>
+<% if current_user.admin? %>
+<div class="row mb-2">
+  <div class="col-12">
+    <%= link_to "New Task", new_project_task_path(@project), class: "btn btn-outline-success btn-sm btn-block" %>
+  </div>
+</div>
+<% end %>
 
-<p>
-  <strong>Summary:</strong>
-  <%= @project.summary %>
-</p>
-
-<p>
-  <strong>Start date:</strong>
-  <%= @project.start_date %>
-</p>
-
-<p>
-  <strong>End date:</strong>
-  <%= @project.end_date %>
-</p>
-
-<p>
-
-  <strong>Tasks</strong>
-  <p><%= link_to 'New Task', new_task_path %></p>
   <% @tasks=current_user.tasks.where(project: @project) %>
   <% if @tasks.empty? %>
-    <p><strong>Tasks not exist for this project</strong></p>
+  <div class="row">
+    <div class="col-12 text-center">
+      Tasks not exist for this project
+    </div>
+  </div>
   <% else %>
-    <% @tasks.each do |task| %>
-      <p><%= task.title %>
-      <p><%= task.description %>
-      <p><%= task.status.title %>
-      <p><%= link_to 'Show', task_path(task) %>
-      <p><%= link_to 'Edit', edit_task_path(task) %>
-      <p><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <div class="row">
+    <div class="col-3">
+      <strong>Title</strong>
+    </div>
+    <div class="col-3">
+      <strong>Description</strong>
+    </div>
+    <div class="col-3">
+      <strong>Status</strong>
+    </div>
+  </div>
+  <% @tasks.each do |task| %>
+  <div class="row mb-2">
+    <div class="col-3">
+      <%= task.title %>
+    </div>
+    <div class="col-3">
+      <%= task.description %>
+    </div>
+    <div class="col-3">
+      <%= task.status.title %>
+    </div>
+    <div class="col-1">
+      <%= link_to 'Show', task_path(task), class: "btn btn-outline-info btn-block btn-sm" %>
+    </div>
+    <% if current_user.admin? %>
+    <div class="col-1">
+      <%= link_to 'Edit', edit_task_path(task), class: "btn btn-outline-warning btn-block btn-sm" %>
+    </div>
+    <div class="col-1">
+      <%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger btn-block btn-sm" %>
+    </div>
     <% end %>
+  </div>
   <% end %>
-</p>
-
-<%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %>
+<% end %>
+  <div class="row">
+    <div class="col-12 text-center">
+      <%= link_to 'Back', root_path, class: "btn btn-outline-dark my-2 my-sm-0" %>
+    </div>
+  </div>

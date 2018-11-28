@@ -1,8 +1,7 @@
 <%= form_with(model: project, local: true) do |form| %>
   <% if project.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-warning" role="alert">
       <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
-
       <ul>
       <% project.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -11,27 +10,27 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, class: "form-control", required: true %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :summary %>
-    <%= form.text_area :summary %>
+    <%= form.text_area :summary, class: "form-control", required: true %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :start_date %>
-    <%= form.datetime_select :start_date %>
+    <%= form.date_select :start_date, class: "form-control", required: true %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :end_date %>
-    <%= form.datetime_select :end_date %>
+    <%= form.date_select :end_date, class: "form-control", required: true %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.submit 'Submit', class: "btn btn-outline-success btn-lg" %>
   </div>
 <% end %>

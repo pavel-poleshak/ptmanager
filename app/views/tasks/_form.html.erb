@@ -1,6 +1,6 @@
 <%= form_with(model: task, local: true) do |form| %>
   <% if task.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-warning" role="alert">
       <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
 
       <ul>
@@ -11,27 +11,27 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :title %>
-    <%= form.text_field :title %>
+    <%= form.text_field :title, class: "form-control", required: true %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :description %>
-    <%= form.text_area :description %>
+    <%= form.text_area :description, class: "form-control", required: true %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :status_id %>
-    <%= form.collection_select(:status_id, Status.all, :id, :title) %>
+    <%= form.collection_select(:status_id, Status.all, :id, :title, class: "form-control", required: true) %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :project_id %>
-    <%= form.collection_select(:project_id, Project.all, :id, :name) %>
+    <%= form.collection_select(:project_id, Project.all, :id, :name, class: "form-control", required: true) %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.submit "submit", class: "btn btn-outline-success btn-lg"%>
   </div>
 <% end %>

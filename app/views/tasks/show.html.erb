@@ -1,33 +1,44 @@
-<p id="notice"><%= notice %></p>
+<%= render 'regular_information', title: "Task info" %>
+<%= render partial: "main_information", locals: { task: @task } %>
+<div class="row">
+  <div class="col-12 text-center">
+    <strong>Tasks</strong>
+  </div>
+</div>
+<% if current_user.admin? %>
+<div class="row mb-2">
+  <div class="col-12">
+    <%= link_to "New User", new_task_path, class: "btn btn-outline-success btn-sm btn-block" %>
+  </div>
+</div>
+<% end %>
 
-<p>
-  <strong>Title:</strong>
-  <%= @task.title %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @task.description %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @task.status.title %>
-</p>
-
-<p>
-  <strong>Project:</strong>
-  <%= @task.project.name %>
-</p>
-
-<p>
-  <strong>Users</strong>
+  <% @tasks=current_user.tasks.where(project: @project) %>
+  <% if @task.users.empty? %>
+  <div class="row">
+    <div class="col-12 text-center">
+      Users not exist for this task
+    </div>
+  </div>
+  <% else %>
   <% @task.users.each do |user| %>
-    <p><%= "#{user.first_name} #{user.last_name} #{user.id} #{@task.id}" %>
-    <%= link_to "Show", task_user_path(@task, user) %>
-    <%= link_to 'Unsubscribe', delete_join_user_path(@task, user), method: :delete,  userdata: { confirm: 'Are you sure?' } %>
+    <div class="row mb-2">
+      <div class="col-10">
+        <%= "#{user.first_name} #{user.last_name} #{user.email}" %>
+      </div>
+      <% if current_user.admin? %>
+      <div class="col-1">
+          <%= link_to "Show", task_user_path(@task, user), class: "btn btn-outline-info btn-sm btn-block" %>
+      </div>
+      <div class="col-1">
+          <%= link_to 'Unsubscribe', delete_join_user_path(@task, user), method: :delete,  userdata: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger btn-sm" %>
+      </div>
+      <% end %>
+  </div>
   <% end %>
-</p>
-
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %>
+<% end %>
+  <div class="row">
+    <div class="col-12 text-center">
+      <%= link_to 'Back', project_path(@task.project), class: "btn btn-outline-dark my-2 my-sm-0" %>
+    </div>
+  </div>
