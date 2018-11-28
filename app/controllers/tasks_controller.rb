@@ -63,12 +63,28 @@ class TasksController < ApplicationController
     end
   end
 
+  def new_join_user
+    @task=Task.find(params[:task_id])
+    #@users=User.where("users.id NOT IN (?)", @task.users.pluck(:user_id))
+    @users=User.where.not(id: @task.users.pluck(:user_id))
+  end
+
   def delete_join_user
     @task=Task.find(params[:task_id])
     @user=User.find(params[:id])
     @task.users.delete(@user)
     respond_to do |format|
-      format.html { redirect_to tasks_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to task_url(@task), notice: 'User was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def create_join_user
+    @task=Task.find(params[:task_id])
+    @user=User.find(params[:user][:id])
+    @task.task_items.create(user: @user)
+    respond_to do |format|
+      format.html { redirect_to @task, notice: 'User was successfully added.' }
       format.json { head :no_content }
     end
   end
