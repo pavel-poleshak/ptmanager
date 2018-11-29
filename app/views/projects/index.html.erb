@@ -1,6 +1,10 @@
+<% if @projects.any? %>
 <%= render 'regular_information', title: "Projects" %>
 <% @projects.each do |project| %>
   <%= render partial: "main_information", locals: { project: project } %>
+  <% end %>
+<% else %>
+  <h5>You don't have active projects</h5>
 <% end %>
 <% if current_user.admin? %>
   <div class="row">
