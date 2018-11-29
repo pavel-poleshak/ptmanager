@@ -1,5 +1,7 @@
 class StatusesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_status, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_admin?
 
   # GET /statuses
   # GET /statuses.json
@@ -28,8 +30,8 @@ class StatusesController < ApplicationController
 
     respond_to do |format|
       if @status.save
-        format.html { redirect_to @status, notice: 'Status was successfully created.' }
-        format.json { render :show, status: :created, location: @status }
+        format.html { redirect_to statuses_url, notice: 'Status was successfully created.' }
+        format.json { render :index, status: :created, location: @status }
       else
         format.html { render :new }
         format.json { render json: @status.errors, status: :unprocessable_entity }
@@ -42,8 +44,8 @@ class StatusesController < ApplicationController
   def update
     respond_to do |format|
       if @status.update(status_params)
-        format.html { redirect_to @status, notice: 'Status was successfully updated.' }
-        format.json { render :show, status: :ok, location: @status }
+        format.html { redirect_to statuses_url, notice: 'Status was successfully updated.' }
+        format.json { render :index, status: :ok, location: @status }
       else
         format.html { render :edit }
         format.json { render json: @status.errors, status: :unprocessable_entity }
