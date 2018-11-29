@@ -1,7 +1,11 @@
+<% if @tasks.any? %>
 <%= render 'regular_information', title: "Tasks" %>
   <% @tasks.each do |task| %>
     <%= render partial: "main_information", locals: { task: task } %>
   <% end %>
+<% else %>
+  <h5>You don't have active tasks</h5>
+<% end %>
     <% if current_user.admin? %>
     <div class="row">
       <div class="col-12">

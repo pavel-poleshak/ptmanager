@@ -6,7 +6,11 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = current_user.tasks
+    if current_user.admin?
+      @tasks=Task.all
+    else
+      @tasks = current_user.tasks
+    end
   end
 
   # GET /tasks/1
