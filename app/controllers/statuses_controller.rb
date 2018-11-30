@@ -56,10 +56,14 @@ class StatusesController < ApplicationController
   # DELETE /statuses/1
   # DELETE /statuses/1.json
   def destroy
-    @status.destroy
     respond_to do |format|
-      format.html { redirect_to statuses_url, notice: 'Status was successfully destroyed.' }
-      format.json { head :no_content }
+      if @status.destroy
+        format.html { redirect_to statuses_url, notice: 'Status was successfully destroyed.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to statuses_url, notice: 'Status was not destroyed.'  }
+        format.json { render json: @status.errors, status: :unprocessable_entity }
+      end
     end
   end
 
